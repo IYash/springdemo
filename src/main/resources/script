@@ -1,0 +1,14 @@
+package com.example.demo.biz;
+
+import com.example.demo.service.HelloService;
+import javax.annotation.Resource;
+
+class LoaderV{
+
+    @Resource
+    HelloService helloService;
+
+    void run(){
+        helloService.sayHello("loaderV");
+    }
+}

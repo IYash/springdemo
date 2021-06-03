@@ -1,0 +1,38 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /demo
+cat:
+  name: springdemo
+context:
+  initializer:
+    classes: com.example.demo.config.MyApplicationContextInitializer
+redis:
+  pool:
+    maxTotal: 200
+    maxIdle: 16
+    minIdle: 8
+    maxWaitMills: 30
+    LIFO: true
+    testWhileIdle: true
+    testOnBorrow: false
+management:
+  endpoint:
+    health:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        exclude: env,beans
+  metrics:
+    enable:
+      http: true
+      hikaricp: false
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password:
