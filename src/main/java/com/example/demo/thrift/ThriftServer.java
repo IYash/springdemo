@@ -1,6 +1,5 @@
 package com.example.demo.thrift;
 
-import com.example.demo.thrift.generated.PersonService;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.TProcessorFactory;
 import org.apache.thrift.protocol.TCompactProtocol;
@@ -20,25 +19,25 @@ import java.util.concurrent.TimeUnit;
 public class ThriftServer {
     public static void main(String[] args) throws Exception{
         //非阻塞的socket
-        TProcessor processor = gettProcessor();
-        TNonblockingServerSocket socket = new TNonblockingServerSocket(8899);
-        THsHaServer.Args arg = new THsHaServer.Args(socket).minWorkerThreads(1).maxWorkerThreads(4).stopTimeoutVal(1000).stopTimeoutUnit(TimeUnit.MINUTES);
+        startServiceServer(new PersonServiceImpl(),8899);
+    }
+    public static void startServiceServer(Object service,int port) throws Exception{
 
+        TNonblockingServerSocket socket = new TNonblockingServerSocket(port);
+        THsHaServer.Args arg = new THsHaServer.Args(socket).minWorkerThreads(1).maxWorkerThreads(4).stopTimeoutVal(1000).stopTimeoutUnit(TimeUnit.MINUTES);
         //协议
         arg.protocolFactory(new TCompactProtocol.Factory());
         arg.transportFactory(new TFramedTransport.Factory());
-        arg.processorFactory(new TProcessorFactory(processor));
+        arg.processorFactory(new TProcessorFactory(parseProcessor(service)));
         //启动server
         TServer server = new THsHaServer(arg);
         System.out.println("thrift server start");
         server.serve();
     }
-
-    private static TProcessor gettProcessor() {
+    private static TProcessor parseProcessor(Object service) {
         Class clazz = null;
         String pname;
         String serviceClassName = "";
-        PersonService.Iface service = new PersonServiceImpl();
         Class<?> serviceClass = service.getClass();
         Class<?>[] interfaces = serviceClass.getInterfaces(); //处理器，泛型真正服务的类型
         TProcessor processor = null;

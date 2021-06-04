@@ -1,19 +1,16 @@
 package com.example.demo.thrift.pool;
 
-import com.example.demo.thrift.generated.PersonService;
 import com.google.common.collect.Maps;
 import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
-import org.apache.thrift.transport.TTransportException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Author: shiguang
