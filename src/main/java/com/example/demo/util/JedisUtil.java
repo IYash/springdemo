@@ -49,4 +49,9 @@ public class JedisUtil implements InitializingBean {
     public int inc(){
         return new Random().nextInt(1000);
     }
+
+    //手动使用redis
+    public static Jedis manualInitJedis(){
+        return new Jedis("localhost",6379);
+    }
 }

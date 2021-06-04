@@ -14,16 +14,16 @@ import java.lang.reflect.Proxy;
 /**
  * @Author: shiguang
  * @Date: 2021/6/3
- * @Description:
+ * @Description: 基于client的服务通信方式
  **/
 public class ThriftClient {
 
     public static void main(String[] args) throws Exception{
         TTransport transport = new TFramedTransport(new TSocket("localhost",8899),600);
         TProtocol protocol = new TCompactProtocol(transport);
+        transport.open();
         try{
             PersonService.Iface proxyClient = (PersonService.Iface)getClient(protocol);
-            transport.open();
             Person person = proxyClient.getPersonByUsername("张三");
             System.out.println(person.getUsername());
             System.out.println(person.getAge());
