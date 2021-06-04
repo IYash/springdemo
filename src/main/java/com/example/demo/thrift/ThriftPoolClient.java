@@ -16,7 +16,7 @@ public class ThriftPoolClient {
         PoolConfig poolConfig = new PoolConfig();
         poolConfig.setMaxTotal(2);
         poolConfig.setMinTotal(2);
-        MyThriftTransportPool pool = new MyThriftTransportPool(poolConfig,new MyThriftTransportFactory());
+        MyThriftTransportPool pool = new MyThriftTransportPool(poolConfig,new MyThriftTransportFactory(PersonService.class));
         long start  = System.currentTimeMillis();
         PersonService.Iface proxyClient = null;
         String objName = null;

@@ -23,15 +23,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MyThriftTransportFactory implements PoolFactory<Object>{
 
     private Map<String,TTransport> tTransportMap = Maps.newConcurrentMap();
-
-    public MyThriftTransportFactory(){}
+    private Class thriftClass;
+    public MyThriftTransportFactory(Class thriftClass){
+        this.thriftClass = thriftClass;
+    }
     @Override
     public Object makeObject()  {
         TTransport transport = new TFramedTransport(new TSocket("localhost",8899),600);
         TProtocol protocol = new TCompactProtocol(transport);
         try {
             transport.open();
-            Class<?> thriftClass = PersonService.class;
             ClassLoader classLoader = thriftClass.getClassLoader();
             String service = thriftClass.getName();
             Class<?> thriftClientClass = classLoader.loadClass(service + "$Client");
