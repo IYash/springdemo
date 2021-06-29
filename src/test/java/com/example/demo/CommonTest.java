@@ -82,7 +82,8 @@ public class CommonTest {
     }
     @Test
     public void sourceTest(){
-        List<String> noteIds = Lists.newArrayList("60b5d1800000000000000f94","60d044260000000000004619");
+        //List<String> noteIds = Lists.newArrayList("60b5d1800000000000000f94","60d044260000000000004619");
+        List<String> noteIds = Lists.newArrayList("606eec18000000002103e168");
         List<String> topics = Lists.newArrayList("60d04fea00000000000038f3");
         Map<String,String> infoMap = Maps.newHashMap();
         String infoT = "hset hash:danmaku_activity_rule_info '%s' '%s'";
@@ -92,7 +93,7 @@ public class CommonTest {
         infoMap.put("danmaku_activity_end_time","1630407967");
         infoMap.put("danmaku_activity_switch","1");
         infoMap.put("danmaku_activity_content_sha1","1");
-        infoMap.put("danmaku_activity_effect_v","6000000");//todo 生产环境改为7000000
+        infoMap.put("danmaku_activity_effect_v","6990000");//todo 生产环境改为7000000
         Set<Map.Entry<String, String>> infoEntries = infoMap.entrySet();
         infoEntries.stream().forEach(entry->{
             String key = entry.getKey();
