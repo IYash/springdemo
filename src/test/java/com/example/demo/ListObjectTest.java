@@ -3,6 +3,7 @@ package com.example.demo;
 
 import org.assertj.core.util.Lists;
 import org.junit.Test;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -13,6 +14,12 @@ import java.util.List;
  **/
 public class ListObjectTest {
 
+    @Test
+    public void testContains(){
+        List<String> sources = Lists.newArrayList("a","b","c");
+        List<String> target = Lists.newArrayList("b","e","f");
+        System.out.println(CollectionUtils.containsAny(sources,target));
+    }
     @Test
     public void listTest(){
         TrendIntrudeResponse.Art art = new TrendIntrudeResponse.Art();art.setName("art");
