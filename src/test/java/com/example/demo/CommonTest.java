@@ -84,12 +84,12 @@ public class CommonTest {
     public void sourceTest(){
         //List<String> noteIds = Lists.newArrayList("60b5d1800000000000000f94","60d044260000000000004619");
         List<String> noteIds = Lists.newArrayList("606eec18000000002103e168");
-        List<String> topics = Lists.newArrayList("60d04fea00000000000038f3");
+        List<String> topics = Lists.newArrayList("60d04fea00000000000038f3","60dda7ae00000000000000c8");
         Map<String,String> infoMap = Maps.newHashMap();
         String infoT = "hset hash:danmaku_activity_rule_info '%s' '%s'";
         infoMap.put("danmaku_activity_topics",JSONObject.toJSONString(topics));
         infoMap.put("danmaku_activity_notes",JSONObject.toJSONString(noteIds));
-        infoMap.put("danmaku_activity_begin_time","1624344074"); //todo 时间戳 秒为单位
+        infoMap.put("danmaku_activity_begin_time","1630407967"); //todo 时间戳 秒为单位
         infoMap.put("danmaku_activity_end_time","1630407967");
         infoMap.put("danmaku_activity_switch","1");
         infoMap.put("danmaku_activity_content_sha1","1");
@@ -103,7 +103,7 @@ public class CommonTest {
         System.out.println("==================================");
         String styleT = "hset hash:danmaku_activity_style_info '%s' '%s'";
         Map<String,String> contentStyleMap = Maps.newHashMap();
-        contentStyleMap.put("你好","4294967295,4278190080,0,4294901760,,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,15,1");
+        contentStyleMap.put("你好","4294967295,4278190080,0,4294901760,,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,0,1");
         contentStyleMap.put("hello","4294967295,4278190080,4294901760,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,,15,1");
         contentStyleMap.put("加油！","4294967295,4278190080,0,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,15,1");
         contentStyleMap.put("123@#","4294967295,4278190080,0,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,15,1");
