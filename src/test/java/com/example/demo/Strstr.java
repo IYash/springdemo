@@ -1,6 +1,9 @@
 package com.example.demo;
 
+import com.google.common.collect.Maps;
 import org.junit.Test;
+
+import java.util.Map;
 
 /**
  * @Author: shiguang
@@ -37,5 +40,20 @@ public class Strstr {
             if(j==m) return i-m+1;
         }
         return -1;
+    }
+
+    private int lengthOfLongestSubstring(String s){//最长无重复子串
+        if (s.length()==0) return 0;
+        Map<Character,Integer> map = Maps.newHashMap();
+        int max = 0;
+        int left =0;
+        for(int i=0;i<s.length();i++){
+            if(map.containsKey(s.charAt(i))){//意味着字符重复了，则需要更新left的值
+                left = Math.max(left,map.get(s.charAt(i))+1);
+            }
+            map.put(s.charAt(i),i);
+            max = Math.max(max,i-left+1);
+        }
+        return max;
     }
 }
