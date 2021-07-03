@@ -107,6 +107,7 @@ public class CommonTest {
         contentStyleMap.put("hello","4294967295,4278190080,4294901760,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,,15,1");
         contentStyleMap.put("加油！","4294967295,4278190080,0,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,15,1");
         contentStyleMap.put("123@#","4294967295,4278190080,0,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,15,1");
+        contentStyleMap.put("中国队加油","4294967295,4294911042,0,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,,15,1");
         Set<Map.Entry<String, String>> entries = contentStyleMap.entrySet();
         entries.stream().forEach(entry->{
                String key = entry.getKey();
