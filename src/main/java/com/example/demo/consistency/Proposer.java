@@ -19,6 +19,6 @@ public class Proposer {
     /**
      *  提案Map类型,key 为提案编号，value提案值
      */
-    private Map<Integer,String> proposals;
+    private volatile Map<Integer,String> proposals;
 
 }

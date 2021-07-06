@@ -104,7 +104,7 @@ public class ConsistencyTest1 {
                     @Override
                     public void run() {
                         try {
-                            guocheng(proposer);
+                            propose(proposer);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -123,7 +123,7 @@ public class ConsistencyTest1 {
                         try {
                             runnable.join();
                             System.out.println("提交者id：" + id + "重启了");
-                            guocheng(proposer1);
+                            propose(proposer1);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -133,12 +133,12 @@ public class ConsistencyTest1 {
             }
         }
     }
-    public static void guocheng( Proposer proposer) throws InterruptedException {
+    public static void propose( Proposer proposer) throws InterruptedException {
         //1、生成提案
         // 先判断（学习）之前的接受者里面有没有接受之前提议者的提案,没有就自己生成一个提案
         //如果有接受者已经接受了之前提议者的提案，无论自己的提案编号大还是小，都得把自己的提案的value指定为之前的那个提案的value
         randomAcceptorQuorum();
-        if(!chackAccept()){//没有接受过提案
+        if(!checkAccept()){//没有接受过提案
             HashMap<Integer, String> map = new HashMap<>();
             map.put(Common.proposerN.incrementAndGet(),"提案"+proposer.getId());
             proposer.setProposals(map);
@@ -199,7 +199,7 @@ public class ConsistencyTest1 {
         //阶段2，accept请求
         randomAcceptorQuorum();
         AtomicInteger aokCount=new AtomicInteger(0);
-        Boolean half = chackHalf(Common.ACCEPTOR_COUNT, var2.intValue());
+        Boolean half = checkHalf(Common.ACCEPTOR_COUNT, var2.intValue());
         if(half){
             for (Acceptor acceptor : acceptorListQuorum) {
                 String req = acceptor.acceptReq(proporsal);
@@ -208,10 +208,10 @@ public class ConsistencyTest1 {
                 }
             }
         }else{
-            guocheng(proposer);
+            propose(proposer);
         }
         //如果过半，V被确定，不过半，重新发起Prepare请求
-        Boolean var4 = chackHalf(Common.ACCEPTOR_COUNT, aokCount.intValue());
+        Boolean var4 = checkHalf(Common.ACCEPTOR_COUNT, aokCount.intValue());
         if(var4){
             //输出一下每个acceptor的AcceptV
             for (Acceptor acceptor : acceptorListQuorum) {
@@ -221,7 +221,7 @@ public class ConsistencyTest1 {
             }
             return;//结束
         }else{
-            guocheng(proposer);
+            propose(proposer);
         }
 
     }
@@ -232,7 +232,7 @@ public class ConsistencyTest1 {
      * @param var1
      * @return true 过半  false 不过半
      */
-    public static Boolean chackHalf(int total,int var1){
+    public static Boolean checkHalf(int total,int var1){
         double var = total / 2.0;
         if(var>var1){
             return false;
@@ -243,7 +243,7 @@ public class ConsistencyTest1 {
      *
      * @return false 没有接收提案 true 有接受过提案
      */
-    public static Boolean chackAccept(){
+    public static Boolean checkAccept(){
         Boolean res=false;
         for (int i = 0; i < acceptorListQuorum.size(); i++) {
             Acceptor acceptor = acceptorListQuorum.get(i);
