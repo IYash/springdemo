@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Stack;
 
 /**
  * @Author: shiguang
@@ -53,5 +54,35 @@ public class BacktraceTest {
             backtrace(resultList,part,left,right+1);
             part.deleteCharAt(part.length()-1);
         }
+    }
+    //最长有效括号对
+    @Test
+    public void test3(){
+        String brackets = "((())())(()()()()(())";
+        System.out.println(longestBrackets(brackets));
+    }
+    //通过栈的思路来处理
+    private int longestBrackets(String source){
+        Stack<Integer> stack = new Stack<>();
+        int curMax = 0;
+        int len = source.length();
+        int i=0;
+        while(i<len){
+            char c = source.charAt(i);
+            if(c=='('){
+                stack.push(i);
+            }else{
+                if(!stack.isEmpty()){
+                    stack.pop();
+                    if(stack.isEmpty()) curMax = i+1;
+                    else{
+                        int pos = stack.peek();
+                        curMax = Math.max(curMax,i-pos);
+                    }
+                }
+            }
+            i++;
+        }
+        return curMax;
     }
 }
