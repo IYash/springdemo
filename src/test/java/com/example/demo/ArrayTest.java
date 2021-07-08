@@ -54,4 +54,48 @@ public class ArrayTest {
         }
         return slow;
     }
+    @Test
+    public void test2(){
+        int[] nums =new int[]{2,4,3};
+        nums = nextSeq(nums);
+        System.out.println(nums[0]+"--"+nums[1]+"--"+nums[2]);
+    }
+    //获取数列的下一个序列nums=[1,2,3]->[1,3,2]
+    public int[] nextSeq(int[] nums){
+        int len = nums.length;
+        int minLeft = 0;
+        int right = len-1;
+        int maxLeft = -1;
+        //找到最小的移动范围
+        for(int j=len-1;j>minLeft;j--){
+            for(int i=j-1;i>=minLeft;i--){
+                if(nums[j]>nums[i]){
+                    minLeft = i+1;
+                    if(i>maxLeft){
+                        right = j;
+                        maxLeft = i;
+                    }
+                    break;
+                }
+            }
+        }
+        if(maxLeft!=-1){
+            swap(nums,maxLeft,right);
+            //重新排列范围内的值至最小序列
+            for(int i=maxLeft+1;i<len-1;i++){
+                for(int j=i+1;j<len;j++){
+                    if(nums[i]>nums[j]){
+                        swap(nums,i,j);
+                    }
+                }
+            }
+        }
+        return nums;
+       }
+
+    private void swap(int[] nums, int left, int right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
+    }
 }
