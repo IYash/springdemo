@@ -83,7 +83,11 @@ public class CommonTest {
     @Test
     public void sourceTest(){
         //List<String> noteIds = Lists.newArrayList("60b5d1800000000000000f94","60d044260000000000004619");//test
-        List<String> noteIds = Lists.newArrayList("606eec18000000002103e168","60e6b05a000000000102ac71");//prod
+        List<String> noteIds = Lists.newArrayList("606eec18000000002103e168","60e6b05a000000000102ac71","60e6c7fe000000000102e5a7","60e6c9ca000000002103484b"
+                ,"60e6c9ae00000000010250a3","60e6c8ee0000000021038ca4","60e6c8dd000000000102e8c5","60e6c8cc0000000001024b91",
+                "60e6c8bc0000000001024b2f","60e6c89e0000000001028664","60e6c88c0000000021038a24","60e6c87700000000010249bc","60e6c863000000000102858f",
+                "60e6c84b00000000010284c2","60e6c99e000000000102503d","60e6c974000000002103469d","60e6c92b0000000001024d6b","60e6c91d0000000021038d4d",
+                "60e6c90c0000000021038d24","60e6c8fd0000000021038cf0","60e6c9f50000000001028b37");//prod
         List<String> topics = Lists.newArrayList("60d04fea00000000000038f3","60dda7ae00000000000000c8");
         Map<String,String> infoMap = Maps.newHashMap();
         String infoT = "hset hash:danmaku_activity_rule_info '%s' '%s'";
@@ -108,6 +112,8 @@ public class CommonTest {
         contentStyleMap.put("加油！","4294967295,4278190080,0,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,15,1");
         contentStyleMap.put("123@#","4294967295,4278190080,0,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,15,1");
         contentStyleMap.put("中国队加油","4294967295,4294911042,0,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,,15,1");
+        contentStyleMap.put("中国加油","4294967295,4294911042,0,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,,15,1");
+        contentStyleMap.put("中国队","4294967295,4294911042,0,0,https://fe-video-qc.xhscdn.com/fe-platfrom/6bc7cc85d2e4b0df659574aebb7afae0e2cfa2ab.png,,15,1");
         Set<Map.Entry<String, String>> entries = contentStyleMap.entrySet();
         entries.stream().forEach(entry->{
                String key = entry.getKey();

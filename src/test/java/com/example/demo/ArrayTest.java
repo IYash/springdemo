@@ -1,7 +1,12 @@
 package com.example.demo;
 
 import org.junit.Test;
+import org.testng.collections.Maps;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -154,4 +159,83 @@ public class ArrayTest {
         int[] result = combineResult(leftT,midT,rightT);
         System.out.println(result[0]+"---"+result[1]);
     }
+
+    @Test
+    public void test5(){
+
+    }
+    //有效的数独
+    private boolean isValidSudoku(char[][] board){
+        //行判断，列判断，块判断
+        //init data
+        Map<Integer,Integer>[] rows = new HashMap[9];
+        Map<Integer,Integer>[] columns = new HashMap[9];
+        Map<Integer,Integer>[] boxes = new HashMap[9];
+        for(int i=0;i<9;i++){
+            rows[i] = new HashMap<>();
+            columns[i] = new HashMap<>();
+            boxes[i] = new HashMap<>();
+        }
+        //validate a board
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                char num = board[i][j];
+                if(num!='.'){
+                    int n = (int)num;
+                    int box_index = (i/3)*3 +j/3;
+                    //keep the current cell value
+                    rows[i].put(n,rows[i].getOrDefault(n,0)+1);
+                    columns[j].put(n,columns[j].getOrDefault(n,0)+1);
+                    boxes[box_index].put(n,boxes[box_index].getOrDefault(n,0)+1);
+                    //check if this value has been already seen
+                    if(rows[i].get(n)>1 || columns[j].get(n)>1||boxes[box_index].get(n)>1){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    @Test
+    public void test6(){
+
+    }
+    private boolean[][] line = new boolean[9][9];
+    private boolean[][] column = new boolean[9][9];
+    private boolean[][][] block = new boolean[3][3][9];
+    private boolean valid = false;
+    private List<int[]> spaces = new ArrayList<>();
+
+    //数独的解
+    private void solveSudoku(char[][] board){
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if(board[i][j] =='.'){
+                    spaces.add(new int[]{i,j});
+                }else{
+                    int digit = board[i][j]-'0'-1;
+                    line[i][digit] = column[j][digit]=block[i/3][j/3][digit]=true;
+                }
+            }
+        }
+        dfs(board,0);
+    }
+    public void dfs(char[][] board,int pos){
+        if(pos == spaces.size()){
+            valid = true;
+            return;
+        }
+        int[] space =  spaces.get(pos);
+        int i = space[0],j = space[1];
+        for(int digit = 0;digit<9 && !valid;++digit){
+            if(!line[i][digit] && !column[j][digit] && !block[i/3][j/3][digit]){
+                line[i][digit] = column[j][digit]=block[i/3][j/3][digit]=true;
+                board[i][j] = (char)(digit + '0' +1);
+                dfs(board,pos+1);
+                line[i][digit] = column[j][digit]=block[i/3][j/3][digit]=false;
+            }
+        }
+    }
+
 }
