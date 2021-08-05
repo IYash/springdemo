@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import org.junit.Test;
-import org.testng.collections.Maps;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +60,7 @@ public class ArrayTest {
     }
     @Test
     public void test2(){
-        int[] nums =new int[]{1,4,3};
+        int[] nums =new int[]{4,5,6};
         nums = nextSeq(nums);
         System.out.println(nums[0]+"--"+nums[1]+"--"+nums[2]);
     }
@@ -237,5 +236,104 @@ public class ArrayTest {
             }
         }
     }
+    @Test
+    public void test7(){
+        System.out.println(countAndSay(10));
+    }
+    //对字符"1"进行n次的外观描述
+    private String countAndSay(int n){
+        if(n==1) return "1";
+        String result = countAndSay(n-1);
+        System.out.println(result);
+        return parseResult(result);
+    }
+    //描述字符串
+    private String parseResult(String result) {
+        if(result.length() == 1) return "11";
+        int len = result.length();
+        StringBuilder sb = new StringBuilder();
+        int i=0,j=1;
+        for(;i < len && j<len;){
+            while(j<len){
+                if(result.charAt(i) != result.charAt(j)){
+                    sb.append(j-i).append(result.charAt(i));
+                    i=j;
+                    j ++;
+                    break;
+                }else {
+                    j++;
+                }
+            }
+        }
+        if(j-i>=1) sb.append(j-i).append(result.charAt(i));
+        return sb.toString();
+    }
+    @Test
+    public void test8(){
+        int[] candidates = {2,2,3,4};
+        int target = 7;
+        combinationSum(candidates,target);
+    }
+    //组合总和，假设candidates是升序存储
+    private List<List<Integer>> combinationSum(int[] candidates,int target){
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> combine = new ArrayList<>();
+        dfs(candidates,target,ans,combine,0);
+        return ans;
+    }
 
+    private void dfs(int[] candidates, int target, List<List<Integer>> ans, List<Integer> combine,int idx) {
+        if(idx == candidates.length){
+            return;
+        }
+        if(target == 0){
+            ans.add(new ArrayList<>(combine));
+            return;
+        }
+        //直接跳过
+        dfs(candidates,target,ans,combine,idx+1);
+        //选择当前数
+        if(target - candidates[idx] >= 0 ){
+            combine.add(candidates[idx]);
+            dfs(candidates,target-candidates[idx],ans,combine,idx);
+            combine.remove(combine.size()-1);
+        }
+    }
+    //未排序数组中查找缺失的最小正整数，简单的方式就是通过map记录数据，依次判断数据是否在map中，需要过多的额外空间；这里使用常数的额外空间
+    //使用标记处理方式如下，使用数值替换也是一种可行的思路
+    private int lostMinNum(int[] nums){
+        //[1,2,4,5],获取数组的长度，大于数组长度的数字直接跳过，小于1的数字直接跳过
+        int len = nums.length;
+        for(int i=0;i<len;i++){
+            if(nums[i]<=0) nums[i] = len+1;
+        }
+        for(int i=0;i<len;i++){
+            int num = Math.abs(nums[i]);
+            if(num<=len){
+                nums[num-1] = -Math.abs(nums[num-1]);
+            }
+        }
+        for(int i=0;i<len;i++){
+            if(nums[i]>0) return i+1;
+        }
+        return len+1;
+    }
+    //给定n个非负整数表示每个宽度为1的柱子的高度图，计算按此排列的柱子，下雨之后能接多少水
+    public int trap(int[] height){
+        int ans = 0;
+        int left = 0,right=height.length-1;
+        int leftMax = 0,rightMax = 0;
+        while(left<right){
+            leftMax = Math.max(leftMax,height[left]);
+            rightMax = Math.max(rightMax,height[right]);
+            if(height[left]<height[right]){
+                ans += leftMax - height[left];
+                ++left;
+            }else{
+                ans += rightMax - height[right];
+                --right;
+            }
+        }
+        return ans;
+    }
 }
