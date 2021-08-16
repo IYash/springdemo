@@ -11,4 +11,6 @@ import com.example.BoundInfo;
 public class BoundInfoInjected {
 
     private String boundInfo;
+    @BoundInfo
+    public void printHello(){}
 }
