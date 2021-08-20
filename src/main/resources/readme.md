@@ -9,4 +9,5 @@
 - 基于micrometer的埋点
 - groovy脚本的集成
 - js脚本语言的使用
-- 自定义注解，SOURCE阶段的使用，CLASS阶段完成类的添加，修改类貌似需要javaassist来处理
+- 自定义注解，SOURCE阶段的使用，CLASS阶段完成类的添加，修改类貌似需要javaassist来处理，可曾闻java语法树-----！！！
+- 基于guava的本地缓存的使用
