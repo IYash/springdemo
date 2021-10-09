@@ -77,4 +77,31 @@ public class TempTest {
     private String buildString(){
         return snowFlake.nextId()+"";
     }
+
+    @Test
+    public void testLogic(){
+        boolean a = true,b=true,c=false;
+        System.out.println(a||b&&c);
+        int x = 7,y=8;
+        System.out.println((x&1));
+        System.out.println((x&2));
+        System.out.println((x&4));
+        System.out.println(y&1);
+        System.out.println(y&2);
+        System.out.println(y&4);
+    }
+    @Test
+    public void efficiencyTest(){
+        List<String> original = org.testng.collections.Lists.newArrayList();
+        for (int i=0;i<2000;i++){
+            original.add(buildString());
+        }
+        String content = buildString();
+        long start = System.currentTimeMillis();
+        for(String v:original){
+            if(content.contains(v)) break;
+        }
+        System.out.println(System.currentTimeMillis()-start);
+    }
+
 }
