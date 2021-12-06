@@ -2,17 +2,18 @@ package com.example.demo;
 
 import com.example.demo.util.SnowFlakeShortUrl;
 import com.google.common.collect.Lists;
-import com.site.lookup.util.StringUtils;
+import com.google.common.collect.Maps;
+import org.codehaus.plexus.util.StringUtils;
 import org.junit.Test;
-import org.springframework.util.CollectionUtils;
 
-import java.nio.charset.StandardCharsets;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Author: shiguang
@@ -197,11 +198,64 @@ public class TempTest {
     @Test
     public void comparingTest(){
         ComparingO o1 = new ComparingO();
-        o1.setPriority(2);
+        o1.setPriority(-2);
         ComparingO o2 = new ComparingO();
-        o2.setPriority(1);
+        o2.setPriority(-3);
         List<ComparingO> list = Lists.newArrayList(o1,o2);
         Collections.sort(list, Comparator.comparing(ComparingO::getPriority));
         System.out.println(list.get(0).getPriority());
+    }
+    @Test
+    public void testDoubleVal(){
+//        String input = "0";
+//        double inputVal = Double.valueOf(input);
+//        System.out.println(inputVal == 0);
+        System.out.println(Double.valueOf(10)%5);
+
+    }
+    @Test
+    public void testFormat() throws Exception{
+         String BASE_URI = "xhsdiscover://post_new_note?";
+         String SOURCE_TEMP = "{\"extraInfo\":{\"subType\":\"creator_center\",\"page_entrance_type\":\"笔记灵感本周热点\",\"topic_id\":\"%s\"},\"type\":\"personal\",\"ids\":\"%s\"}";
+        String ATTACH_TEMP = "{\"topics\":[%s{\"page_id\":\"6016078a525b480001096e28\"}]}";
+        String source = String.format(SOURCE_TEMP,1,1);
+        String str="";
+        String pageId = "123";
+        if(StringUtils.isNotEmpty(pageId)){
+            str = "{\"page_id\":\""+pageId+"\"},";
+        }
+        String attach = String.format(ATTACH_TEMP,str);
+        StringBuilder sb = new StringBuilder();
+        sb.append(BASE_URI);
+        StringBuilder paramSb = new StringBuilder();
+        Map<String,String> params = Maps.newHashMap();
+        params.put("source",source);
+        params.put("attach",attach);
+        for(Map.Entry<String,String> entry:params.entrySet()){
+            paramSb.append("&").append(entry.getKey()).append("=").append(entry.getValue());
+        }
+        sb.append(URLEncoder.encode(paramSb.substring(1)));
+        System.out.println(sb.toString());
+    }
+    @Test
+    public void subListTest(){
+        List<String> ss = Lists.newArrayList("1","2","3","4");
+        ss.subList(0,2);
+        System.out.println(ss.size());
+        sub(ss);
+        System.out.println(ss.size());
+    }
+    private void sub(List<String> list){
+        list = list.subList(0,0);
+        System.out.println(list.size());
+    }
+    @Test
+    public void demoTest(){
+        System.out.println(ActivityDemo.demoActivity().size());
+    }
+    @Test
+    public void testList(){
+        List<String> ss = Lists.newArrayList("a","b");
+        ss.stream().filter(e-> StringUtils.equals("a",e)).forEach(e-> System.out.println(e));
     }
 }
