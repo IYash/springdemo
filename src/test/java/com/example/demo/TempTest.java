@@ -1,16 +1,21 @@
 package com.example.demo;
 
+import com.example.demo.util.JedisUtil;
 import com.example.demo.util.SnowFlakeShortUrl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.codehaus.plexus.util.StringUtils;
 import org.junit.Test;
+import redis.clients.jedis.Jedis;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -256,6 +261,28 @@ public class TempTest {
     @Test
     public void testList(){
         List<String> ss = Lists.newArrayList("a","b");
-        ss.stream().filter(e-> StringUtils.equals("a",e)).forEach(e-> System.out.println(e));
+        ss=ss.stream().filter(e-> StringUtils.equals("a",e)).collect(Collectors.toList());
+        System.out.println(ss.size());
+        ss.remove("a");
+        ss.remove("b");
+        ss.remove("c");
+    }
+    @Test
+    public void redisExTest(){
+
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(new Date());
+            calendar.setFirstDayOfWeek(Calendar.FRIDAY);
+            calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            long currentFridayTime = calendar.getTimeInMillis();
+            long expireAt = currentFridayTime/1000 + (7 * 24 * 3600);
+
+            Jedis cache = JedisUtil.manualInitJedis();
+            cache.set("exp","11");
+            cache.expireAt("exp",expireAt);
     }
 }

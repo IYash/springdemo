@@ -83,14 +83,15 @@ public class GuavaCache {
         return false;
     }
 
-//    public static void main(String[] args) throws Exception{
-//        GuavaCache cache = new GuavaCache();
-//        cache.init();
-//        String[] cs = new String[]{"hello","hi","you","world","perfect","you","world","wow"};
-//        int len = cs.length;
-//        for(int i=0;i<len;i++){
-//            System.out.println(cache.contains(cs[i]));
-//            Thread.sleep(1000);
-//        }
-//    }
+    public static void main(String[] args) throws Exception{
+        GuavaCache cache = new GuavaCache();
+        cache.init();
+        String[] cs = new String[]{"hello","hi","you","world","perfect","you","world","wow"};
+        int len = cs.length;
+        for(int i=0;i<len;i++){
+            System.out.println(cache.contains(cs[i]));
+            Thread.sleep(1000);
+        }
+        System.in.read();
+    }
 }
