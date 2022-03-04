@@ -145,4 +145,10 @@ public class CodeTest  {
         System.out.println(s1.retainAll(s2));
         System.out.println(s1);
     }
+    @Test
+    public void test12(){
+        int a = 15;
+        int b = 3;
+        System.out.println(a^b);
+    }
 }
