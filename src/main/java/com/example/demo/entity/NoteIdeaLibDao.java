@@ -1,10 +1,14 @@
 package com.example.demo.entity;
 
+import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -69,4 +73,69 @@ public class NoteIdeaLibDao {
      * 记录最后更新时间
      */
     private Date updateAt;
+    //笔记灵感2.2添加字段
+    /**
+     * 灵感唯一比较，直接使用hash
+     */
+    private int uniqueCode;
+    /**
+     * 渠道 0为全部
+     */
+    private int canal;
+    /**
+     * 热点数据描述
+     */
+    private String hotData;
+    /**
+     * 召回日期
+     */
+    private Date recallDate;
+    /**
+     * 昨日发布数量
+     */
+    private int publishLastDay;
+    /**
+     * 最近一周发布数量
+     */
+    private int publishLastWeek;
+    /**
+     * 可见人群，ugc/pgc
+     */
+    private String userType;
+    /**
+     * 是否加权
+     */
+    private int priority;
+    /**
+     * 时效性
+     */
+    private int timeliness;
+    /**
+     * 关键字[]
+     */
+    private String keyword;
+    /**
+     * 相关关键词[]
+     */
+    private String keywordRel;
+    /**
+     * 手动添加笔记[]
+     */
+    private String notesManual;
+    /**
+     * 运营召回笔记[]
+     */
+    private String notesRecall;
+    /**
+     * 上架笔记数量
+     */
+    private int topN;
+    /**
+     * 计算指标
+     */
+    private String calQuota;
+    /**
+     * 是否展示，默认展示默认0:展示 1:移动到灵感库,不展示2:上架
+     */
+    private Integer status;
 }

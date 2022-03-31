@@ -60,9 +60,45 @@ public class ArrayTest {
     }
     @Test
     public void test2(){
-        int[] nums =new int[]{4,5,6};
-        nums = nextSeq(nums);
+        int[] nums =new int[]{4,7,6};
+        nums = nextSeq2(nums);
         System.out.println(nums[0]+"--"+nums[1]+"--"+nums[2]);
+    }
+    public int[] nextSeq2(int[] nums){
+        //1.从右侧相邻位置开始查找,当nums[i] > nums[i-1]表示i-1是一个可替换的位置，需要保证i-1足够大
+        //2.从i->n中找出最小值，替换i-1
+        //3.i->n完成升序排序
+        int len = nums.length;
+        int i = len-1;
+        int left = -1;
+        while(i>0){
+            if (nums[i]>nums[i-1]) {
+                left = i -1;
+                break;
+            }
+            i--;
+        }
+        if (left!=-1){
+            int rMin = Integer.MAX_VALUE;
+            int index = len-1;
+            int right = 0;
+            while(index > left){
+                if (rMin > nums[index]){
+                    rMin = nums[index];
+                    right = index;
+                }
+                index -- ;
+            }
+            swap(nums,left,right);
+            for(int k=left+1;k<len;k++){
+                for(int j=i+1;j<len;j++){
+                    if(nums[k]>nums[j]){
+                        swap(nums,k,j);
+                    }
+                }
+            }
+        }
+        return nums;
     }
     //获取数列的下一个序列nums=[1,2,3]->[1,3,2]
     public int[] nextSeq(int[] nums){

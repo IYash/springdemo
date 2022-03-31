@@ -9,6 +9,7 @@ import com.site.lookup.util.StringUtils;
 import lombok.Data;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
+import org.springframework.util.CollectionUtils;
 import org.testng.collections.Lists;
 import redis.clients.jedis.Jedis;
 
@@ -17,6 +18,8 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -286,4 +289,83 @@ public class CommonTest {
         }
         writeFile(sb,"/Users/shiguang/Desktop/author");
     }
+
+    @Test
+    public void testLongDivide(){
+        long a = 4;
+        long b = 10;
+        System.out.println(a/b);
+        System.out.println((double)a/b);
+    }
+    @Test
+    public void subList(){
+        List<Integer> nums = Lists.newArrayList(1,3,4,5,6);
+        int len = nums.size();
+        System.out.println(nums.subList(0,len));
+    }
+    @Test
+    public void testJson1(){
+        String json = "{\"new_post_num_d7\":10,\"read_feed_num_d7\":10,\"product_rate_3d\":10}";
+        CalQuota cal = JSONObject.parseObject(json,CalQuota.class);
+        System.out.println(cal.getNewPostNumD7());
+    }
+    @Data
+    public static class CalQuota{
+        String newPostNumD7;
+        String readFeedNumD7;
+        String productRate3d;
+    }
+
+    @Test
+    public void testNano(){
+        System.out.println(System.nanoTime());
+        System.out.println(System.currentTimeMillis());
+    }
+    @Test
+    public void testMap(){
+        Map<String,String> map = Maps.newHashMap();
+        map.put("a","1");
+        map.put("b","2");
+        System.out.println(map.values().size());
+    }
+    @Test
+    public void testListOp(){
+        int start = 0;
+        int size = 10;
+        List<String> manual = Lists.newArrayList("12345","2345");
+        List<String> recall = Lists.newArrayList("123456","23457");
+        List<String> result = Lists.newArrayList();
+        result.addAll(orderByList(manual));
+        result.addAll(orderByList(recall));
+        int len = result.size();
+        int end = (start + size) > len ? len : (start + size);
+        boolean hasNext = false;
+        if (end < len) {
+            hasNext = true;
+        }
+        System.out.println(len +"===="+hasNext);
+    }
+
+    private List<String> orderByList(List<String> noteIds) {
+        List<String> result = org.assertj.core.util.Lists.newArrayList();
+        if (CollectionUtils.isEmpty(noteIds)) {
+            return result;
+        }
+        int len = noteIds.size();
+        if (len == 0) {
+            return result;
+        }
+        int start = 0;
+        int end = 0;
+        int part = 100;
+        List<String> sub;
+        while (end < len) {
+            end = (end + part) >= len ? len : end + part;
+            sub = noteIds.subList(start, end);
+            start += part;
+            result.addAll(sub);
+        }
+        return result;
+    }
+
 }
